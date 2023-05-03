@@ -120,4 +120,11 @@ BEGIN
     ORDER BY u.puntaje DESC
     LIMIT 3;
 END$$
+
+CREATE PROCEDURE manejar_puntaje_usuario(id_usuario INT)
+BEGIN
+    UPDATE usuarios u
+    SET puntaje = calcular_puntaje_usuario(id_usuario)
+    WHERE u.id = id_usuario;    
+END$$
 DELIMITER ;
