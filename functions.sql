@@ -50,4 +50,35 @@ BEGIN
 
     RETURN saldo_usuario;
 END$$
+
+CREATE FUNCTION calcular_puntaje_usuario(id_usuario INT)
+RETURNS INT
+BEGIN
+    DECLARE equipo_id INT;
+    DECLARE suma_puntaje_jugadores INT;
+
+    SELECT e.id INTO equipo_id
+    FROM equipos e  
+    WHERE e.id_usuario = id_usuario;
+
+    SELECT SUM(j.puntaje) INTO suma_puntaje_jugadores
+    FROM jugadores j 
+    JOIN seleccionados s ON s.id_jugador = j.id
+    WHERE s.id_equipo = equipo_id;
+
+    RETURN suma_puntaje_jugadores;
+END$$
+
+CREATE FUNCTION obtener_usuario_ganador()
+RETURNS INT
+BEGIN
+    DECLARE id_usuario_ganador INT;
+
+    SELECT u.id INTO id_usuario_ganador
+    FROM usuarios u 
+    ORDER BY u.puntaje DESC
+    LIMIT 1;
+
+    RETURN id_usuario_ganador;
+END$$
 DELIMITER ;
