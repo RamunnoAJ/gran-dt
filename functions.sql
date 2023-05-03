@@ -38,4 +38,16 @@ BEGIN
 
     RETURN saldo_actualizado;
 END$$
+
+CREATE FUNCTION obtener_saldo_usuario(id_usuario INT)
+RETURNS INT
+BEGIN
+    DECLARE saldo_usuario INT;
+
+    SELECT saldo INTO saldo_usuario
+    FROM usuarios u
+    WHERE u.id = id_usuario;
+
+    RETURN saldo_usuario;
+END$$
 DELIMITER ;
